@@ -1,0 +1,29 @@
+{% extends 'index.html' %}
+
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/paciente.css') }}">
+
+    <h1>Listado de pacientes</h1>
+    <br>
+    <table id="miTabla" class="table-hover">
+		  <thead>
+		    <tr>
+                <th scope="col">Identificador</th>
+		        <th scope="col">Nombre</th>
+		        <th scope="col">Apellidos</th>
+                <th scope="col">Informes</th>
+		    </tr>
+		  </thead>
+		  <tbody>
+                {% for paciente in pacientes %}
+                    <tr>
+                        <td>{{ paciente._id }}</td>
+                        <td>{{ paciente.Nombre }}</td>
+                        <td>{{ paciente.Apellidos }}</td>
+                        <td><a href="{{ url_for('show_informes', idPaciente=paciente._id) }}"><button class="button"><span>Ver</span></button></a></td>
+                    </tr>
+                {% endfor %}
+		  </tbody>
+		</table>
+
+{% endblock %}

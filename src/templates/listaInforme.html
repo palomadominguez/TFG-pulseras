@@ -1,0 +1,28 @@
+{% extends 'index.html' %}
+
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/informe.css') }}">
+
+    <h1> Informes del paciente: </h1>
+    <br>
+    <table class="table-hover" id="miTablaInformes">
+		  <thead>
+		    <tr>
+		        <th scope="col">Identificador Informe</th>
+                <th scope="col">Archivo de la pulsera</th>
+                <th scope="col">Analisis del archivo</th>
+		    </tr>
+		  </thead>
+		  <tbody>
+                {% for informe in informes %}
+                    <tr>
+                        <td>{{ informe._idInforme }}</td>
+                        <td><a href=""><button class="button"><span>Descargar</span></button></a></td>
+                        <td><a href=""><button class="button"><span>Descargar</span></button></a></td>
+
+                    </tr>
+                {% endfor %}
+		  </tbody>
+		</table>
+{% endblock %}
+

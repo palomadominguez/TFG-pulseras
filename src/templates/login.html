@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Página de Inicio de sesión</title>
+    <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/login.css') }}">
+    <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="{{ url_for('static', filename='js/login.js') }}"></script>
+    <base href="/">
+  </head>
+  <body>
+    <div class="wrapper fadeInDown">
+      <div id="formContent">
+        <!-- Tabs Titles -->
+
+        <!-- Icon -->
+        <div class="fadeIn first">
+          <img src="{{ url_for('static', filename='images/obeso.png') }}" id="icon" alt="Avatar" />
+        </div>
+
+        <!-- Login Form -->
+        <form>
+          <input type="text" id="login" class="fadeIn second" placeholder="Usuario">
+          <input type="password" id="password" class="fadeIn third" placeholder="Contrase&ntilde;a">
+          <!--<input type="submit" class="fadeIn fourth" id="btnSubmit">-->
+          <button type="button" class="btn btn-primary btn-sm" id="btnSubmit">Iniciar sesi&oacuten</button>
+        </form>
+
+        <!-- Remind Passowrd -->
+        <div id="formFooter">
+          <button type="button" class = "btn btn-primary-outline center-block underlineHover" data-container="body" data-toggle="popover" data-placement="right" data-content="Escriba a nuestro servicio gratuito consulta@bbTrack.es.">
+          ¿Se le ha olvidado la contrase&ntilde;a?
+          </button>
+        </div>
+      </div>
+          <button class = "btn btn-primary-outline center-block underlineHover" id ="btnAyuda" data-toggle="collapse" data-target="#ayudaTarget">
+          Ayuda
+          </button>
+          <div id="ayudaTarget" class="collapse center-block">
+          <div class="card center-block">
+            <div class="card-body">
+              <h5 class="card-title">¿C&oacute;mo acceder a bbTrack?</h5>
+              <p class="card-text text-info">Envia un correo a admin@oband.es para darse de alta o introduzca el siguiente usuario de prueba.</p>
+              <p class="card-text text-info">Usuario: Medico1, Contrase&ntilde;a: P-Medico1</p>
+            </div>
+          </div>
+          </div>
+    </div>
+  </body>
+</html>

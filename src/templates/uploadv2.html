@@ -1,0 +1,28 @@
+{% extends 'index.html' %}
+
+{% block css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/upload.css') }}">
+{% endblock %}
+
+{% block content %}
+    <h1>Subir un informe </h1>
+
+    <form action="/upload" method="POST" enctype="multipart/form-data">
+        Seleccione el paciente:<br />
+         <select class="form-control" id="idPaciente" name = "idPaciente">
+            {% for paciente in pacientes %}
+                         <option value={{paciente._id}}>{{paciente.Nombre}}, {{paciente.Apellidos}}</option>
+                    {% endfor %}
+        </select>
+    <br>
+     <input type="file" name="archivo">
+    <br>
+        <input type="submit" id="btnEnviarConsulta">
+
+    </form>
+
+{% endblock %}
+
+{% block js %}
+        <script src="{{ url_for('static', filename='js/popupV2.js') }}"></script>
+{% endblock %}
