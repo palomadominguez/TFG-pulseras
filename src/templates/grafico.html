@@ -1,0 +1,45 @@
+{% extends 'index.html' %}
+
+{% block css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/paciente.css') }}">
+{% endblock %}
+
+{% block content %}
+    <h1>Analisis de un informe </h1>
+
+    <form action="/graficar" method="GET" enctype="multipart/form-data">
+        Seleccione el paciente:
+        <br>
+         <select class="form-control" id="idPaciente" name = "idPaciente">
+            {% for paciente in pacientes %}
+                         <option value={{paciente._id}}>{{paciente.Nombre}}, {{paciente.Apellidos}}</option>
+                    {% endfor %}
+        </select>
+        <!--Seleccione el informe:
+        <br>
+        <select class="form-control" id="idInforme" name = "idInforme"></select>-->
+         <br>
+        Seleccione el informe:
+         <select class="form-control" id="parametro" name = "parametro">
+
+            {% for parametro in parametros %}
+                         <option>{{parametro}}</option>
+                    {% endfor %}
+        </select>
+    <br>
+        <input type="submit">
+
+    </form>
+
+{% if counterValues %}
+    <div id="myDiv"></div>
+    <div id="myDiv2"></div>
+
+{% endif %}
+
+
+{% endblock %}
+
+{% block js %}
+        <script src="{{ url_for('static', filename='js/plotlyExampleJS.js') }}"></script>
+{% endblock %}

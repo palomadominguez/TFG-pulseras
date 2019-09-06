@@ -1,7 +1,10 @@
 {% extends 'index.html' %}
 
+{% block css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/paciente.css') }}">
+{% endblock %}
+
 {% block content %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/paciente.css') }}">
 
     <h1>Listado de pacientes</h1>
     <br>

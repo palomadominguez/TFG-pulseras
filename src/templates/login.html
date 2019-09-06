@@ -26,11 +26,13 @@
         </div>
 
         <!-- Login Form -->
-        <form>
-          <input type="text" id="login" class="fadeIn second" placeholder="Usuario">
-          <input type="password" id="password" class="fadeIn third" placeholder="Contrase&ntilde;a">
-          <!--<input type="submit" class="fadeIn fourth" id="btnSubmit">-->
-          <button type="button" class="btn btn-primary btn-sm" id="btnSubmit">Iniciar sesi&oacuten</button>
+        <form action="/login" method="POST">
+          <!--<input type="text" id="login" class="fadeIn second" placeholder="Usuario">-->
+          <!--<input type="password" id="password" class="fadeIn third" placeholder="Contrase&ntilde;a">
+          <button type="button" class="btn btn-primary btn-sm" id="btnSubmit">Iniciar sesi&oacuten</button>-->
+            <input type="username" name="username" id ="login" class="fadeIn second" placeholder="Usuario">
+            <input type="password" name="password" id ="password" class="fadeIn third" placeholder="Contrase&ntilde;a">
+            <input type="submit" value="Iniciar sesion">
         </form>
 
         <!-- Remind Passowrd -->
@@ -46,9 +48,9 @@
           <div id="ayudaTarget" class="collapse center-block">
           <div class="card center-block">
             <div class="card-body">
-              <h5 class="card-title">¿C&oacute;mo acceder a bbTrack?</h5>
+              <h5 class="card-title">¿C&oacute;mo acceder a OBand?</h5>
               <p class="card-text text-info">Envia un correo a admin@oband.es para darse de alta o introduzca el siguiente usuario de prueba.</p>
-              <p class="card-text text-info">Usuario: Medico1, Contrase&ntilde;a: P-Medico1</p>
+              <p class="card-text text-info">Usuario: M-123456, Contrase&ntilde;a: P123456</p>
             </div>
           </div>
           </div>

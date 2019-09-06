@@ -4,11 +4,11 @@ updateInforme()
 function updateInforme() {
 
     var paciente_ =  String($('#idPaciente').val())
-    var paciente = paciente_.substring(0, paciente_.length - 2);
+    //var paciente = paciente_.substring(0, paciente_.length - 2);
 
     $.ajax({
         method: "GET",
-        url: "/api/informes/" + paciente,
+        url: "/api/informes/" + paciente_,
         dataType: "json",
         success: function (data) {
           console.log(data);
@@ -23,7 +23,7 @@ function updateInforme() {
             }
         },
         error: function(data) {
-          alert("Ha habido un error!" + paciente);
+          alert("Ha habido un error!" + paciente_);
 
         }
       });
