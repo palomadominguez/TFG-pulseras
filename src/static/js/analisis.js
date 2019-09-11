@@ -32,4 +32,3 @@ function updateInforme() {
 $('#idPaciente').change(function() {
     updateInforme()
 });
-

@@ -1,0 +1,66 @@
+
+//Insercion en base de datos pulserasdb:
+
+db.MedicoPacientes.save(
+	
+{
+"_id": 123456,
+"Nombre": "Maria",
+"Apellidos": "Del Rocio",
+"Usuario" : "M-123456", 
+"PSS" : "P123456", 
+"Pacientes":[	
+	{ 
+		"_idPaciente" : 11223344, 
+		"Nombre" : "Naira" ,
+		"Apellidos": "Chiclana",
+		"Sexo": "Mujer",
+		"Localidad": "Rincon de la Victoria",
+		"Domicilio":"Calle de la Algarabia, 59",
+		"Telefono":"952345123",
+		"Email":"nairachiclana@oband.es",
+	},
+	{ 
+		"_idPaciente" : 22334455, 
+		"Nombre" : "Jose" ,
+		"Apellidos": "Rodriguez",
+		"Sexo": "Hombre",
+		"Localidad": "Almeria",
+		"Domicilio":"Calle Victoria, 89",
+		"Telefono":"987654321",
+		"Email":"joserodriguez@oband.es",
+	}]
+})
+
+
+//Insercion en base de datos pulserasdb:
+
+db.MedicoPacientes.save(
+{
+"_id": 678901,
+"Nombre": "Juan Luis",
+"Apellidos": "Onieva",
+"Usuario" : "M-678901", 
+"PSS" : "P678901",
+"Pacientes":[	
+	{ 
+		"_idPaciente" : 33445566, 
+		"Nombre" : "Carmela" ,
+		"Apellidos": "Benitez",
+		"Sexo": "Mujer",
+		"Localidad": "Malaga",
+		"Domicilio":"Calle Algarroba, 34",
+		"Telefono":"951234567",
+		"Email":"carmelabenitez@oband.es",
+	},
+	{ 
+		"_idPaciente" : 99887766, 
+		"Nombre" : "Luis" ,
+		"Apellidos": "Castor",
+		"Sexo": "Hombre",
+		"Localidad": "Lucena",
+		"Domicilio":"Calle de Manuel Aranda, 1",
+		"Telefono":"987654321",
+		"Email":"luiscastor@oband.es",
+	}]
+})

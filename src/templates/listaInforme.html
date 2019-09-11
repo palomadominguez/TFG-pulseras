@@ -20,8 +20,8 @@
                 {% for informe in informes %}
                     <tr>
                         <td>{{ informe._idInforme }}</td>
-                        <td><a href="/return-files"  target="blank" name="archivo"><button class='btn btn-default'> DESCARGAR</button></a></td>
-                        <td><a href="{{ url_for('show_grafico') }}"><button class="button"><span>VER</span></button></a></td>
+                        <td><a href="/return-files?nombre={{informe.rutafichero}}"  target="blank" name="archivo"><button class='btn btn-default'> DESCARGAR</button></a></td>
+                        <td><a href="/graficar?ticketId={{informe.identificadorAnalisis}}"><button class="button"><span>VER</span></button></a></td>
 
                     </tr>
                 {% endfor %}

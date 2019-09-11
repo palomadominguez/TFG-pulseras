@@ -1,0 +1,60 @@
+//Coleccion pacientes e Informes
+
+db.PacientesInformes.save(
+
+{	
+	"_id" : 11223344, 
+	"_idMedico": 123456,
+	"Nombre" : "Naira" ,
+	"Apellidos": "Chiclana",
+	"Sexo": "Mujer",
+	"Localidad": "Rincon de la Victoria",
+	"Domicilio":"Calle de la Algarabia, 59",
+	"Telefono":"952345123",
+	"Email":"nairachiclana@oband.es",
+	"Informes":[
+	{
+		"_idInforme":111111111,
+		"RutaArchivo": "Ruta de prueba",
+		"identificadorAnalisis":"Identificador de Prueba"
+	}],
+})
+	
+db.PacientesInformes.save({ 
+	"_id" : 22334455, 
+	"_idMedico": 123456,
+	"Nombre" : "Jose" ,
+	"Apellidos": "Rodriguez",
+	"Sexo": "Hombre",
+	"Localidad": "Almeria",
+	"Domicilio":"Calle Victoria, 89",
+	"Telefono":"987654321",
+	"Email":"joserodriguez@oband.es",
+	"Informes":[]
+})
+
+db.PacientesInformes.save({ 
+	"_id" : 33445566, 
+	"_idMedico": 678901,
+	"Nombre" : "Carmela" ,
+	"Apellidos": "Benitez",
+	"Sexo": "Mujer",
+	"Localidad": "Malaga",
+	"Domicilio":"Calle Algarroba, 34",
+	"Telefono":"951234567",
+	"Email":"carmelabenitez@oband.es",
+	"Informes":[],
+})
+
+db.PacientesInformes.save({
+	"_id" : 99887766, 
+	"_idMedico": 678901,
+	"Nombre" : "Luis" ,
+	"Apellidos": "Castor",
+	"Sexo": "Hombre",
+	"Localidad": "Lucena",
+	"Domicilio":"Calle de Manuel Aranda, 1",
+	"Telefono":"987654321",
+	"Email":"luiscastor@oband.es",
+	"Informes":[]
+})

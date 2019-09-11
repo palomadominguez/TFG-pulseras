@@ -49,13 +49,11 @@ class Database:
         paciente = pacientes['Pacientes'][0]
         return paciente
 
-    ########getIdFiles que me piden ###############
     def get_informes(self,idPaciente):
         print(idPaciente)
         archivos = self.db.PacientesInformes;
         output = []
         informes = archivos.find_one({"_id": int(idPaciente)}, {"Informes": 1})
-        print("AQUIiiiiiiii")
         for informe in informes['Informes']:
             output.append(
                {'_idInforme': int(informe['_idInforme']),
@@ -63,12 +61,21 @@ class Database:
         return output
 
     def get_informe(self,idPaciente, idInforme):
-        informes = self.db.PacientesInformes.find_one({"_id": float(idPaciente)},
-                                                       {"Informes": {"$elemMatch": {"_idInforme": float(idInforme)}}})
+
+        informes = self.db.PacientesInformes.find_one({"_id": int(idPaciente)},
+                                                      {"Informes": {"$elemMatch": {"_idInforme": int(idInforme)}}})
         informe = informes['Informes'][0]
         return informe
 
-    def post_informe(self,idPaciente):
+    def get_ruta_informe(self,idPaciente, idInforme):
+
+        informes = self.db.PacientesInformes.find_one({"_id": int(idPaciente)},
+                                                      {"Informes": {"$elemMatch": {"_idInforme": int(idInforme)}}})
+        informe = informes['Informes'][0]
+        ruta = informe['RutaArchivo']
+        return ruta
+
+    def post_informe(self,idPaciente, idInforme):
         informes = self.db.PacientesInformes.find_one({"_id": int(idPaciente)},
                                                        {"Informes": {"$elemMatch": {"_idInforme": int(idInforme)}}})
         informe = informes['Informes'][0]

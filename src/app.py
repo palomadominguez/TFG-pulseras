@@ -1,6 +1,6 @@
 # mongo.py
 
-from flask import Flask,flash, redirect, render_template, request, session, abort, send_file
+from flask import Flask, flash, redirect, render_template, request, session, abort, send_file, url_for
 from flask import jsonify
 from flask import request
 from flask_pymongo import PyMongo
@@ -9,7 +9,8 @@ from werkzeug import secure_filename
 import time
 import requests
 import collections
-
+import pandas as pd
+import numpy as np
 
 from gevent.pywsgi import WSGIServer
 
@@ -80,6 +81,12 @@ def show_grafico():
     pacientes = db.get_pacientes()
 
     return render_template('grafico.html', pacientes=pacientes,parametros=parametros)
+
+@app.route('/resultados', methods=['GET'])
+def show_resultados():
+    parametros = graficar()
+    return render_template('resultado.html', parametros=parametros)
+
 ##########################################################
 #                   API
 ##########################################################
@@ -130,6 +137,12 @@ def get_informe(idPaciente, idInforme):
     informe = db.get_informe(idPaciente, idInforme)
     return jsonify(informe)
 
+# Get una ruta
+@app.route('/api/ruta/<idPaciente>/<idInforme>', methods=['GET'])
+def get_ruta(idPaciente, idInforme):
+    ruta = db.get_ruta_informe(idPaciente, idInforme)
+    return jsonify(ruta)
+
 
 # POST un informe
 @app.route('/api/informe/<idPaciente>/', methods=['POST'])
@@ -144,10 +157,6 @@ def do_admin_login():
     else:
         flash('wrong password!')
     return render_home()
-
-# String uploadFile(File file, String idPatient, String idDoctor):
-# guarda el fichero en el servidor HDFS (en el sistema de ficheros de tu máquina),
-# añadiendo una entrada en la base de datos con la ruta del fichero.
 
 @app.route("/api/upload")
 def upload_file():
@@ -169,15 +178,10 @@ def uploader():
         path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
         # Agregamos informe a la lista de informes del paciente en la base de datos.
         pacientes = mongo.db.PacientesInformes;
-        pacientes.update({"_id": int(idPaciente)}, {
-            "$push": {"Informes": {"_idInforme": time.time(), "RutaArchivo": path, "identificadorAnalisis": ""}}});
+        pacientes.update({"_id": int(idPaciente), }, {
+            "$push": {"Informes": {"_idInforme": int(time.time()), "RutaArchivo": path, "identificadorAnalisis": ""}}});
         # Retornamos una respuesta satisfactoria
     return render_template('uploadFile.html')
-
-
-# File downloadFile(String idFile, String idPatient, String idDoctor):
-# consulta la base de datos para descargar el fichero almacenado en el
-# servidor HDFS (o tu máquina), dado su identificador de fichero.
 
 @app.route('/download')
 def file_downloads():
@@ -186,51 +190,56 @@ def file_downloads():
 @app.route('/return-files')
 def return_files_tut():
     try:
-        print("Aqui llego")
-        f = request.files['archivo']
-        print(f)
-        filename = secure_filename(f.filename)
-        path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-        return send_file(path, attachment_filename=filename)
+        ruta = request.args.get('nombre')
+        path = os.path.join(app.config['UPLOAD_FOLDER'], ruta)
+        return send_file(path)
     except Exception as e:
         return str(e)
 
+@app.route('/classify', methods=['POST'])
+def classify():
+    if request.method == 'POST':
+        idPaciente = request.form['idPaciente']
+        idInforme = request.form['idInforme']
 
-# String analysis(String IdFile, String idPatient, Strign idDoctor):
-# este será uno de los métodos principales de la API.
-# Realiza el análisis del fichero (dado su identificador) y
-# devuelve un ticket (una cadena de texto).
-@app.route('/classify')
-def classify(idPaciente, idInforme):
+        ruta = db.get_ruta_informe(idPaciente, idInforme)
 
-    informe = get_informe(idPaciente, idInforme);
-    ruta = informe['RutaArchivo'];
+        r = requests.post(url = "http://192.168.48.222:6565/v2/run", json = [
+              {
+                 "task":"classify",
+                 "name": "Description",
+                 "data": ruta
+              }
+            ])
+        print(r.json())
+        ticket_id = r.json()['ticket_id']
+        pacientes = mongo.db.PacientesInformes
+        pacientes.update({"_id": int(idPaciente)}, {
+            "$push": {"Informes": {"_idInforme": time.time(), "identificadorAnalisis": ticket_id}}});
+        # Retornamos una respuesta satisfactoria
 
-    r = requests.post(url = "http://192.168.48.222:6565/v2/run", json = [
-          {
-             "name":"classify",
-             "path":ruta
-          },
-        ] )
-
-    return jsonify(r.json())
-
-@app.route('/returnclassify/<identificadorClasificacion>', methods=['GET'])
-def return_classify(identificadorClasificacion):
-    # consulta en BD como va la clasificacion
-    # devuelve el resultado
-    r = requests.get(url=f"http://192.168.48.222:6565/v2/status?ticket_id={identificadorClasificacion}")
-    return jsonify(r.json())
-
+    return redirect(url_for('.graficar', ticket_id = ticket_id))
 
 @app.route('/graficar', methods=['GET'])
 def graficar():
-    a = [8, 0, 4, 8, 8, 4, 0, 8, 8, 8, 6, 6, 7, 7, 0, 8, 7, 7, 7, 8, 8, 8, 8, 8, 8, 1, 1, 1, 0, 1, 0, 0, 1,
-         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 6, 10]
-    counter = collections.Counter(a)
-    # Counter({1: 4, 2: 4, 3: 2, 5: 2, 4: 1})
-    counterValues = counter.values()
-    return render_template('grafico.html', counterValues=counterValues)
+    ticket_id = request.args.get('ticket_id')
+    print(ticket_id)
+
+    r = requests.get(url=f"http://192.168.48.222:6565/v2/status?ticket_id={ticket_id}")
+    if(r.status_code == 200):
+        r = r.json()
+        if(r['state'] == "SUCCESS"):
+            counter = collections.Counter(r['process_chain_list'][0]['return'])
+            # Counter({1: 4, 2: 4, 3: 2, 5: 2, 4: 1})
+            print(counter)
+            counterValues = counter.values()
+            counterValues = list(counterValues)
+            counterValues = ",".join(map(str, counterValues))
+        else:
+            counterValues = -1
+        return render_template('grafico.html', counterValues=counterValues)
+    else:
+        return redirect(url_for('.render_home'))
 
 if __name__ == '__main__':
     app.secret_key = os.urandom(12)

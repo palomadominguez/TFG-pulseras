@@ -16,10 +16,12 @@ from datetime import datetime
 #Ruta del Modelo
 #model='/home/khaosdev/AnacondaProjects/Proyecto_Pulseras/clf_11.bin'
 
-f_name = '/Users/Paloma/MEGA/4ANO/TFG/models/1__020144_2016-12-12_13-07-57_Carmen_Aguilera_Garcia_6_meses.csv'
+#f_name = '/Users/Paloma/MEGA/4ANO/TFG/models/1__020144_2016-12-12_13-07-57_Carmen_Aguilera_Garcia_6_meses.csv'
+f_name = '/Users/Paloma/MEGA/4ANO/TFG/models/cyclingmodel1.csv'
+
 model = '/Users/Paloma/MEGA/4ANO/TFG/clf_11.bin'
 
-def execute_anal(filename: str, model):
+def execute_analysis(filename: str, model):
     classification, timestamp = classify.classify(filename, model, 1000, 1000)
     return classification, timestamp
 
@@ -33,7 +35,7 @@ if __name__ == '__main__':
     # # Insertamos la clasificacion en la base de datos de mongodb junto a la ruta del fichero insertada previamente
     # mongo.InsertClassify(classification, timestamp, f_name)
     classification, timestamp = classify.classify(f_name, model, 1000, 1000)
-    file = open('testfile.txt', 'w')
+    file = open('testfile.csv', 'w')
     print("aqui empieza")
     print(str(classification))
     file.write(str(classification))

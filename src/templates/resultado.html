@@ -7,17 +7,12 @@
 {% block content %}
     <h1>Analisis de un informe </h1>
 
-{% if counterValues!= -1%}
-<input id="counterValues" type="text" value="{{counterValues}}">
-
-    <div id="myDiv"></div>
-    <div id="myDiv2"></div>
-
-{% else %}
+    {% if ticket["state"] == 'SUCCESS' %}
+        <option value={{paciente._id}}>{{paciente.Nombre}}, {{paciente.Apellidos}}</option>
+    {% else %}
     <h3>Analizando el fichero. Vaya a la pestaña de informes </h3>
 
-{% endif %}
-
+    {% endif %}
 
 {% endblock %}
 
